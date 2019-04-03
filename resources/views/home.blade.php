@@ -98,7 +98,7 @@
                                             </div>
                                             @if ($application->domains->count() < auth()->user()->domain_num)
                                                 <div class="btn-group" role="group" aria-label="Third group">
-                                                    <button type="button" data-toggle="modal" data-target=".domainModal"
+                                                    <button type="button" data-toggle="modal" data-target="#domainModal{{ $application->id }}"
                                                             class="btn btn-secondary">添加域名</button>
                                                 </div>
                                             @endif
@@ -130,7 +130,7 @@
                                 </div>
 
                                     {{--添加域名--}}
-                                    <div class="modal fade bd-example-modal-lg domainModal"
+                                    <div class="modal fade bd-example-modal-lg" id="domainModal{{ $application->id }}"
                                          tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
