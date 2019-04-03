@@ -28,8 +28,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-//        $schedule->command(\App\Console\Commands\DomainCheck::class)
-//            ->everyTenMinutes();
+        $schedule->command(\App\Console\Commands\DomainCheck::class)
+            ->everyTenMinutes();
     }
 
     /**

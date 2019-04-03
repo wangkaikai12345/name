@@ -43,12 +43,12 @@ class WeChatService extends BaseService
                 //短链接查询失败，查询第三方
                 $proxy = ProxyUtil::getValidProxy();
                 $intercept = $this->checkViaAdopt($domain, $proxy);
-
+                Log::info('第三方检测查询成功');
                 if ($intercept == 1) {
-                    Redis::setex('intercept:wecaht:' . $domain, 1 * 60 * 60, $intercept);
+                    Redis::setex('intercept:other:' . $domain, 1 * 60 * 60, $intercept);
                 }
             } elseif ($intercept) {
-                Log::info('微信公众号查询成功');
+                Log::info('微信公众号检测查询成功');
                 //查询成功，检测结果缓存1小时
                 Redis::setex('intercept:wecaht:' . $domain, 1 * 60 * 60, $intercept);
             }
@@ -80,9 +80,9 @@ class WeChatService extends BaseService
             } else {
                 $intercept = 2;
             }
-            Log::info("微信拦截查询成功[域名：$domain][短链接:$short_url]：" . $intercept);
+            Log::info("公众号拦截查询成功[域名：$domain][短链接:$short_url]：" . $intercept);
         } catch (\Exception $exception) {
-            Log::info("微信拦截查询失败[域名：$domain][短链接:$short_url]：" . $exception->getMessage());
+            Log::info("公众号拦截查询失败[域名：$domain][短链接:$short_url]：" . $exception->getMessage());
         }
 
         return $intercept;
@@ -226,15 +226,15 @@ class WeChatService extends BaseService
         $intercept = 0;
         try {
             $intercept = $this->checkViaWeiXinClup($domain, $proxy);
-            Log::info("微信拦截查询成功[域名：{$domain}][weixinclup.com][代理：$proxy]：" . $intercept);
+            Log::info("第三方Clup拦截查询成功[域名：{$domain}][weixinclup.com][代理：$proxy]：" . $intercept);
         } catch (\Exception $exception) {
-            Log::info("微信拦截查询失败[域名：{$domain}][weixinclup.com][代理：$proxy]：" . $exception->getMessage());
+            Log::info("第三方Clup拦截查询失败[域名：{$domain}][weixinclup.com][代理：$proxy]：" . $exception->getMessage());
             if ($exception->getMessage() == 'Exceeding times') {
                 try {
                     $intercept = $this->checkViaDingXsd($domain, $intercept);
-                    Log::info("微信拦截查询成功[域名：{$domain}][dingxsd.com][代理：$proxy]：" . $intercept);
+                    Log::info("第三方Xsd拦截查询成功[域名：{$domain}][dingxsd.com][代理：$proxy]：" . $intercept);
                 } catch (\Exception $e) {
-                    Log::info("微信拦截查询失败[域名：{$domain}][dingxsd.com][代理：$proxy]：" . $exception->getMessage());
+                    Log::info("第三方Xsd拦截查询失败[域名：{$domain}][dingxsd.com][代理：$proxy]：" . $exception->getMessage());
                 }
             }
         }

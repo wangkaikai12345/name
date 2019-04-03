@@ -39,7 +39,7 @@ class DomainCheckJob implements ShouldQueue
         $service = new WeChatService();
         $intercept = $service->check($this->domain->title);
 
-        Log::info('开始检测域名'.$this->domain->title.' 状态'.$intercept );
+        Log::info('检测结束 域名'.$this->domain->title.' 状态'.$intercept );
         $this->domain->status = $intercept;
         $this->domain->save();
     }
