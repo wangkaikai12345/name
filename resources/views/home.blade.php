@@ -128,7 +128,7 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                    <br>
                                     {{--添加域名--}}
                                     <div class="modal fade bd-example-modal-lg" id="domainModal{{ $application->id }}"
                                          tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
